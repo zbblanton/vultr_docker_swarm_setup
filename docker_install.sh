@@ -10,17 +10,20 @@ apt-get -y upgrade
 
 #Create thor account and add public key
 useradd -c "thor" -m thor
-echo "thor:Ch1mP@nz33" | chpasswd
 usermod -aG sudo thor
 usermod -s /bin/bash thor
+passwd -l thor
 mkdir /home/thor/.ssh
 touch /home/thor/.ssh/authorized_keys
 chmod 644 /home/thor/.ssh/authorized_keys
+chown -R thor:thor /home/thor/.ssh
 echo $SSH_PUBLIC_KEY > /home/thor/.ssh/authorized_keys
 
 #Disable root login and password authentication
+echo "thor ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 sed -i 's/PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+passwd -l root
 
 #Restart ssh
 service ssh restart
