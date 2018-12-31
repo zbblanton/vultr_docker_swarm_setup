@@ -10,7 +10,7 @@ apt-get -y upgrade
 
 #Create thor account and add public key
 useradd -c "thor" -m thor
-echo "thor:Ch1mP@nz33" | chpasswd
+echo "thor:TEMPPASS123" | chpasswd
 usermod -aG sudo thor
 usermod -s /bin/bash thor
 mkdir /home/thor/.ssh
